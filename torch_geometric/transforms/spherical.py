@@ -48,7 +48,7 @@ class Spherical(BaseTransform):
 
         phi = torch.acos(cart[..., 2] / rho.view(-1)).view(-1, 1)
 
-        if self.norm:
+        if self.norm and rho.numel() > 0:
             rho = rho / (rho.max() if self.max is None else self.max)
             theta = theta / (2 * PI)
             phi = phi / PI

@@ -34,3 +34,12 @@ def test_polar():
         torch.tensor([[1.0, 1.0, 0.0], [1.0, 1.0, 0.5]]),
         atol=1e-4,
     )
+
+
+def test_polar_empty_edge_index():
+    data = Data(
+        pos=torch.randn(3, 2),
+        edge_index=torch.empty(2, 0, dtype=torch.long),
+    )
+    data = Polar(norm=True)(data)
+    assert data.edge_attr.size() == (0, 2)

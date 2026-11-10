@@ -59,3 +59,12 @@ def test_spherical():
         torch.tensor([[1.0, 1.0, 0.0, 0.0], [1.0, 1.0, 0.0, 1.0]]),
         atol=1e-4,
     )
+
+
+def test_spherical_empty_edge_index():
+    data = Data(
+        pos=torch.randn(3, 3),
+        edge_index=torch.empty(2, 0, dtype=torch.long),
+    )
+    data = Spherical(norm=True)(data)
+    assert data.edge_attr.size() == (0, 3)
