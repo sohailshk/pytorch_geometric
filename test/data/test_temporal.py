@@ -107,6 +107,13 @@ def test_temporal_indexing():
     assert elem.msg.tolist() == data.msg[0:1].tolist()
     assert elem.y.tolist() == data.y[0:1].tolist()
 
+    for i in [-1, -3, -10]:
+        elem = data[i]
+        assert isinstance(elem, TemporalData)
+        assert len(elem) == 1
+        assert elem.src.tolist() == [data.src[i].item()]
+        assert elem.msg.tolist() == [data.msg[i].tolist()]
+
     subset = data[0:5]
     assert isinstance(subset, TemporalData)
     assert len(subset) == 5

@@ -297,7 +297,7 @@ class TemporalData(BaseData):
 
 def prepare_idx(idx):
     if isinstance(idx, int):
-        return slice(idx, idx + 1)
+        return slice(idx, idx + 1 or None)  # `idx = -1` needs an open end.
     if isinstance(idx, (list, tuple)):
         return torch.tensor(idx)
     elif isinstance(idx, slice):
